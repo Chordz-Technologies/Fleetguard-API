@@ -37,11 +37,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'rest_framework',
+    # 'drf_yasg',
     'corsheaders',
     'users',
     'pdftoimages',
     'img2yololabels',
     'excelsheetapi',
+    # 'django_q',
 ]
 
 MIDDLEWARE = [
@@ -55,9 +57,57 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.TokenAuthentication',
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ],
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.AllowAny',
+#     ],
+# }
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+# CASHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': 'redis://192.168.0.128:6379/1',
+#         'OPTIONS': {'CLIENT_CLASS': 'django_redis.client.DefaultClient'}
+#     }
+# }
+
+# Q_CLUSTER={
+#     'name': 'Fleetguard',
+#     'workers': 4,
+#     'recycle': 500,
+#     'timeout': 90,
+#     'retry': 500,
+#     'compress': True,
+#     'save_limit': 250,
+#     'queue_limit': 500,
+#     'cpu_affinity': 1,
+#     'label': 'Django Q',
+#     'redis': {
+#         'host': '192.168.0.128',
+#         'port': 6379,
+#         'db': 0,
+#         'socket_timeout': None,
+#         'charset': 'utf-8',
+#         'errors': 'strict',
+#         'max_connections': 1000,
+#         'ssl':None,
+#     }
+#
+# }
+
 ROOT_URLCONF = "fleetguard_api.urls"
-CSRF_COOKIE_SECURE = False  # Set to True for HTTPS
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']  # Add your domain here
+WSGI_APPLICATION = "fleetguard_api.wsgi.application"
+# CSRF_COOKIE_SECURE = False  # Set to True for HTTPS
+# CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']  # Add your domain here
 
 TEMPLATES = [
     {
@@ -75,9 +125,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "fleetguard_api.wsgi.application"
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST= 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'chordzconnect@gmail.com'
+EMAIL_HOST_PASSWORD = 'ddcd ksjo ryas dtur'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -86,7 +141,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": 'fleetguard',
         'USER': 'root',
-        'PASSWORD': 'Roshni',
+        'PASSWORD': 'chordz',
         'HOST': 'localhost',
         'PORT': '3306'
     }
@@ -116,23 +171,17 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_TZ = True
-
+CSRF_COOKIE_SAMESITE = 'Lax'  # or 'None' if necessary
+SESSION_COOKIE_SAMESITE = 'Lax'  # or 'None'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-
 AUTH_USER_MODEL = "users.User"
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media'
 
