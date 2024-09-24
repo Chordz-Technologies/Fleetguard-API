@@ -1,7 +1,4 @@
 import os
-
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -16,34 +13,7 @@ import logging
 logger=logging.getLogger(__name__)
 
 class PDFToJPEGView(APIView):
-    parser_classes = (MultiPartParser, FormParser)
-
-    @swagger_auto_schema(
-        operation_description="Upload a PDF and convert it to JPEG",
-        responses={
-            200: openapi.Response(
-                description="Successful operation",
-                schema=openapi.Schema(
-                    type=openapi.TYPE_OBJECT,
-                    properties={
-                        'jpeg_images': openapi.Schema(
-                            type=openapi.TYPE_ARRAY,
-                            items=openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_URI)
-                        )
-                    }
-                )
-            ),
-            400: "Invalid input"
-        },
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            properties={
-                'file': openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_BINARY,
-                                       description='The PDF file to convert')
-            },
-            required=['file']
-        )
-    )
+    
     def post(self, request, *args, **kwargs):
         logger.info(f"Request FILES:{request.FILES}")
         if 'file' not in request.FILES:
